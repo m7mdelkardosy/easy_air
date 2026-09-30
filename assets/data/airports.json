@@ -1,0 +1,272 @@
+[
+  {
+    "name": "Cairo International Airport",
+    "city": "Cairo",
+    "country": "Egypt",
+    "code": "CAI"
+  },
+  {
+    "name": "Hurghada International Airport",
+    "city": "Hurghada",
+    "country": "Egypt",
+    "code": "HRG"
+  },
+  {
+    "name": "Sharm El Sheikh International Airport",
+    "city": "Sharm El Sheikh",
+    "country": "Egypt",
+    "code": "SSH"
+  },
+  {
+    "name": "Borg El Arab International Airport",
+    "city": "Alexandria",
+    "country": "Egypt",
+    "code": "HBE"
+  },
+  {
+    "name": "Luxor International Airport",
+    "city": "Luxor",
+    "country": "Egypt",
+    "code": "LXR"
+  },
+  {
+    "name": "Aswan International Airport",
+    "city": "Aswan",
+    "country": "Egypt",
+    "code": "ASW"
+  },
+  {
+    "name": "Dubai International Airport",
+    "city": "Dubai",
+    "country": "United Arab Emirates",
+    "code": "DXB"
+  },
+  {
+    "name": "Abu Dhabi International Airport",
+    "city": "Abu Dhabi",
+    "country": "United Arab Emirates",
+    "code": "AUH"
+  },
+  {
+    "name": "Sharjah International Airport",
+    "city": "Sharjah",
+    "country": "United Arab Emirates",
+    "code": "SHJ"
+  },
+  {
+    "name": "King Khalid International Airport",
+    "city": "Riyadh",
+    "country": "Saudi Arabia",
+    "code": "RUH"
+  },
+  {
+    "name": "King Abdulaziz International Airport",
+    "city": "Jeddah",
+    "country": "Saudi Arabia",
+    "code": "JED"
+  },
+  {
+    "name": "King Fahd International Airport",
+    "city": "Dammam",
+    "country": "Saudi Arabia",
+    "code": "DMM"
+  },
+  {
+    "name": "Prince Mohammad Bin Abdulaziz Airport",
+    "city": "Medina",
+    "country": "Saudi Arabia",
+    "code": "MED"
+  },
+  {
+    "name": "Hamad International Airport",
+    "city": "Doha",
+    "country": "Qatar",
+    "code": "DOH"
+  },
+  {
+    "name": "Kuwait International Airport",
+    "city": "Kuwait City",
+    "country": "Kuwait",
+    "code": "KWI"
+  },
+  {
+    "name": "Muscat International Airport",
+    "city": "Muscat",
+    "country": "Oman",
+    "code": "MCT"
+  },
+  {
+    "name": "Bahrain International Airport",
+    "city": "Manama",
+    "country": "Bahrain",
+    "code": "BAH"
+  },
+  {
+    "name": "Queen Alia International Airport",
+    "city": "Amman",
+    "country": "Jordan",
+    "code": "AMM"
+  },
+  {
+    "name": "Beirut-Rafic Hariri International Airport",
+    "city": "Beirut",
+    "country": "Lebanon",
+    "code": "BEY"
+  },
+  {
+    "name": "Mohammed V International Airport",
+    "city": "Casablanca",
+    "country": "Morocco",
+    "code": "CMN"
+  },
+  {
+    "name": "Tunis-Carthage International Airport",
+    "city": "Tunis",
+    "country": "Tunisia",
+    "code": "TUN"
+  },
+  {
+    "name": "Houari Boumediene Airport",
+    "city": "Algiers",
+    "country": "Algeria",
+    "code": "ALG"
+  },
+  {
+    "name": "Istanbul Airport",
+    "city": "Istanbul",
+    "country": "Turkey",
+    "code": "IST"
+  },
+  {
+    "name": "Sabiha Gokcen International Airport",
+    "city": "Istanbul",
+    "country": "Turkey",
+    "code": "SAW"
+  },
+  {
+    "name": "Heathrow Airport",
+    "city": "London",
+    "country": "United Kingdom",
+    "code": "LHR"
+  },
+  {
+    "name": "Gatwick Airport",
+    "city": "London",
+    "country": "United Kingdom",
+    "code": "LGW"
+  },
+  {
+    "name": "Charles de Gaulle Airport",
+    "city": "Paris",
+    "country": "France",
+    "code": "CDG"
+  },
+  {
+    "name": "Frankfurt Airport",
+    "city": "Frankfurt",
+    "country": "Germany",
+    "code": "FRA"
+  },
+  {
+    "name": "Munich Airport",
+    "city": "Munich",
+    "country": "Germany",
+    "code": "MUC"
+  },
+  {
+    "name": "Amsterdam Airport Schiphol",
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "code": "AMS"
+  },
+  {
+    "name": "Adolfo Suarez Madrid-Barajas Airport",
+    "city": "Madrid",
+    "country": "Spain",
+    "code": "MAD"
+  },
+  {
+    "name": "Barcelona-El Prat Airport",
+    "city": "Barcelona",
+    "country": "Spain",
+    "code": "BCN"
+  },
+  {
+    "name": "Leonardo da Vinci-Fiumicino Airport",
+    "city": "Rome",
+    "country": "Italy",
+    "code": "FCO"
+  },
+  {
+    "name": "Vienna International Airport",
+    "city": "Vienna",
+    "country": "Austria",
+    "code": "VIE"
+  },
+  {
+    "name": "Zurich Airport",
+    "city": "Zurich",
+    "country": "Switzerland",
+    "code": "ZRH"
+  },
+  {
+    "name": "John F. Kennedy International Airport",
+    "city": "New York",
+    "country": "United States",
+    "code": "JFK"
+  },
+  {
+    "name": "Los Angeles International Airport",
+    "city": "Los Angeles",
+    "country": "United States",
+    "code": "LAX"
+  },
+  {
+    "name": "O'Hare International Airport",
+    "city": "Chicago",
+    "country": "United States",
+    "code": "ORD"
+  },
+  {
+    "name": "Miami International Airport",
+    "city": "Miami",
+    "country": "United States",
+    "code": "MIA"
+  },
+  {
+    "name": "Toronto Pearson International Airport",
+    "city": "Toronto",
+    "country": "Canada",
+    "code": "YYZ"
+  },
+  {
+    "name": "Singapore Changi Airport",
+    "city": "Singapore",
+    "country": "Singapore",
+    "code": "SIN"
+  },
+  {
+    "name": "Tokyo Haneda Airport",
+    "city": "Tokyo",
+    "country": "Japan",
+    "code": "HND"
+  },
+  {
+    "name": "Suvarnabhumi Airport",
+    "city": "Bangkok",
+    "country": "Thailand",
+    "code": "BKK"
+  },
+  {
+    "name": "Kuala Lumpur International Airport",
+    "city": "Kuala Lumpur",
+    "country": "Malaysia",
+    "code": "KUL"
+  },
+  {
+    "name": "Sydney Kingsford Smith Airport",
+    "city": "Sydney",
+    "country": "Australia",
+    "code": "SYD"
+  }
+]

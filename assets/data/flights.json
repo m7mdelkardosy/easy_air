@@ -1,0 +1,212 @@
+[
+  {
+    "id": "FL-101",
+    "airline": "EgyptAir",
+    "fromCode": "CAI",
+    "toCode": "DXB",
+    "departTime": "08:30",
+    "arriveTime": "13:00",
+    "duration": "3h 30m",
+    "isDirect": true,
+    "price": 350.0,
+    "date": "2025-02-25"
+  },
+  {
+    "id": "FL-102",
+    "airline": "Emirates",
+    "fromCode": "CAI",
+    "toCode": "DXB",
+    "departTime": "15:15",
+    "arriveTime": "19:45",
+    "duration": "3h 30m",
+    "isDirect": true,
+    "price": 480.0,
+    "date": "2025-02-25"
+  },
+  {
+    "id": "FL-103",
+    "airline": "Flydubai",
+    "fromCode": "CAI",
+    "toCode": "DXB",
+    "departTime": "22:00",
+    "arriveTime": "02:30",
+    "duration": "3h 30m",
+    "isDirect": true,
+    "price": 290.0,
+    "date": "2025-02-25"
+  },
+
+  {
+    "id": "FL-201",
+    "airline": "EgyptAir",
+    "fromCode": "CAI",
+    "toCode": "JED",
+    "departTime": "06:00",
+    "arriveTime": "09:15",
+    "duration": "2h 15m",
+    "isDirect": true,
+    "price": 280.0,
+    "date": "2025-02-25"
+  },
+  {
+    "id": "FL-202",
+    "airline": "Saudia",
+    "fromCode": "CAI",
+    "toCode": "JED",
+    "departTime": "12:30",
+    "arriveTime": "15:45",
+    "duration": "2h 15m",
+    "isDirect": true,
+    "price": 310.0,
+    "date": "2025-02-25"
+  },
+  {
+    "id": "FL-203",
+    "airline": "Flynas",
+    "fromCode": "CAI",
+    "toCode": "JED",
+    "departTime": "19:00",
+    "arriveTime": "22:15",
+    "duration": "2h 15m",
+    "isDirect": true,
+    "price": 220.0,
+    "date": "2025-02-25"
+  },
+
+  {
+    "id": "FL-301",
+    "airline": "EgyptAir",
+    "fromCode": "CAI",
+    "toCode": "LHR",
+    "departTime": "09:10",
+    "arriveTime": "13:30",
+    "duration": "5h 20m",
+    "isDirect": true,
+    "price": 620.0,
+    "date": "2025-02-25"
+  },
+  {
+    "id": "FL-302",
+    "airline": "British Airways",
+    "fromCode": "CAI",
+    "toCode": "LHR",
+    "departTime": "16:40",
+    "arriveTime": "21:00",
+    "duration": "5h 20m",
+    "isDirect": true,
+    "price": 710.0,
+    "date": "2025-02-25"
+  },
+
+  {
+    "id": "FL-401",
+    "airline": "Turkish Airlines",
+    "fromCode": "CAI",
+    "toCode": "IST",
+    "departTime": "03:25",
+    "arriveTime": "06:45",
+    "duration": "2h 20m",
+    "isDirect": true,
+    "price": 340.0,
+    "date": "2025-02-25"
+  },
+  {
+    "id": "FL-402",
+    "airline": "EgyptAir",
+    "fromCode": "CAI",
+    "toCode": "IST",
+    "departTime": "14:10",
+    "arriveTime": "17:30",
+    "duration": "2h 20m",
+    "isDirect": true,
+    "price": 310.0,
+    "date": "2025-02-25"
+  },
+
+  {
+    "id": "FL-501",
+    "airline": "Emirates",
+    "fromCode": "DXB",
+    "toCode": "JFK",
+    "departTime": "02:20",
+    "arriveTime": "08:50",
+    "duration": "14h 30m",
+    "isDirect": true,
+    "price": 1150.0,
+    "date": "2025-02-25"
+  },
+  {
+    "id": "FL-502",
+    "airline": "Qatar Airways",
+    "fromCode": "DXB",
+    "toCode": "JFK",
+    "departTime": "07:00",
+    "arriveTime": "16:30",
+    "duration": "17h 30m",
+    "isDirect": false,
+    "price": 980.0,
+    "date": "2025-02-25"
+  },
+
+  {
+    "id": "FL-601",
+    "airline": "Saudia",
+    "fromCode": "JED",
+    "toCode": "RUH",
+    "departTime": "07:00",
+    "arriveTime": "08:40",
+    "duration": "1h 40m",
+    "isDirect": true,
+    "price": 110.0,
+    "date": "2025-02-25"
+  },
+  {
+    "id": "FL-602",
+    "airline": "Flynas",
+    "fromCode": "JED",
+    "toCode": "RUH",
+    "departTime": "13:15",
+    "arriveTime": "14:55",
+    "duration": "1h 40m",
+    "isDirect": true,
+    "price": 85.0,
+    "date": "2025-02-25"
+  },
+  {
+    "id": "FL-603",
+    "airline": "Flyadeal",
+    "fromCode": "JED",
+    "toCode": "RUH",
+    "departTime": "21:30",
+    "arriveTime": "23:10",
+    "duration": "1h 40m",
+    "isDirect": true,
+    "price": 75.0,
+    "date": "2025-02-25"
+  },
+
+  {
+    "id": "FL-701",
+    "airline": "Qatar Airways",
+    "fromCode": "DOH",
+    "toCode": "CAI",
+    "departTime": "13:00",
+    "arriveTime": "15:30",
+    "duration": "3h 30m",
+    "isDirect": true,
+    "price": 410.0,
+    "date": "2025-02-25"
+  },
+  {
+    "id": "FL-702",
+    "airline": "EgyptAir",
+    "fromCode": "DOH",
+    "toCode": "CAI",
+    "departTime": "20:15",
+    "arriveTime": "22:45",
+    "duration": "3h 30m",
+    "isDirect": true,
+    "price": 390.0,
+    "date": "2025-02-25"
+  }
+]

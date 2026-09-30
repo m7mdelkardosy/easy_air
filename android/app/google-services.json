@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "188069399305",
+    "project_id": "easy-air-app",
+    "storage_bucket": "easy-air-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:188069399305:android:03d7b0a5f19908602f21d8",
+        "android_client_info": {
+          "package_name": "com.example.easyair_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnyRQ5x6Q-yLGu_VUdSrYF7miw_kxmpfw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
