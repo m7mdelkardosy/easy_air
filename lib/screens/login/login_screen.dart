@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:easyair_app/screens/login/register_screen.dart';
 import 'package:easyair_app/shared/custom_txtfield.dart';
 import 'package:flutter/material.dart';
@@ -336,8 +337,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                           ScaffoldMessenger.of(
                                             context,
                                           ).showSnackBar(
-                                            const SnackBar(
-                                              content: Text('Welcome back! 👋'),
+                                             SnackBar(
+                                              content: Text('Welcome_back'.tr()),
                                               backgroundColor: Colors.blue,
                                             ),
                                           );

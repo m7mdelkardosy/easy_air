@@ -5,11 +5,7 @@ class SeatItemWidget extends StatelessWidget {
   final SeatModel seat;
   final VoidCallback onTap;
 
-  const SeatItemWidget({
-    super.key,
-    required this.seat,
-    required this.onTap,
-  });
+  const SeatItemWidget({super.key, required this.seat, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -20,18 +16,18 @@ class SeatItemWidget extends StatelessWidget {
 
     switch (seat.status) {
       case SeatStatus.taken:
-        bgColor = const Color(0xFF334155); // رمادي غامق محجوز
-        borderColor = Colors.transparent;
-        icon = const Icon(Icons.close, size: 16, color: Colors.white38);
+        bgColor = const Color(0xFFE8EDF5);
+        borderColor = const Color(0xFFD0D7E2);
+        icon = const Icon(Icons.close, size: 16, color: Color(0xFF9AA3B2));
         break;
       case SeatStatus.available:
-        bgColor = Colors.white; // أبيض فاضي
-        borderColor = Colors.grey.shade300;
+        bgColor = Colors.white;
+        borderColor = const Color(0xFFD0D7E2);
         break;
       case SeatStatus.premium:
-        bgColor = const Color(0xFFE9D5FF); // بنفسجي ممتاز
-        borderColor = const Color(0xFFA855F7);
-        icon = const Icon(Icons.star, size: 14, color: Color(0xFFA855F7));
+        bgColor = const Color(0xFFEFF6FF);
+        borderColor = const Color(0xFF2B82FB);
+        icon = const Icon(Icons.star, size: 14, color: Color(0xFF2B82FB));
         break;
       case SeatStatus.selected:
         bgColor = const Color(0xFFFFB73F); // برتقالي اختياري
@@ -56,7 +52,7 @@ class SeatItemWidget extends StatelessWidget {
                     color: const Color(0xFFFFB73F).withValues(alpha: 0.4),
                     blurRadius: 8,
                     spreadRadius: 1,
-                  )
+                  ),
                 ]
               : [],
         ),

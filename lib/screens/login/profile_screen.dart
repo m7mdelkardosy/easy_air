@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
@@ -58,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       final bool? shouldUpload = await showDialog<bool>(
         context: context,
         builder: (BuildContext dialogContext) => AlertDialog(
-          title: const Text('Use this profile photo?'),
+          title: Text('profile_photo'.tr()),
           content: Center(
             heightFactor: 1,
             child: ClipOval(
@@ -73,11 +74,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dialogContext, false),
-              child: const Text('Cancel'),
+              child:  Text('cancel'.tr()),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(dialogContext, true),
-              child: const Text('Use photo'),
+              child:  Text('use_photo'.tr()),
             ),
           ],
         ),
@@ -95,8 +96,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (!mounted) return;
       setState(() {});
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Profile picture updated!'),
+         SnackBar(
+          content: Text('Profile_up'.tr()),
           backgroundColor: Colors.green,
         ),
       );
@@ -129,8 +130,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          'My Profile',
+        title:  Text(
+          'my_profile'.tr(),
           style: TextStyle(
             color: Color(0xFF101C2E),
             fontWeight: FontWeight.bold,
@@ -216,7 +217,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   _buildProfileOption(
   icon: Icons.person_outline,
-  title: 'Personal Details',
+  title: 'personal_details'.tr(),
   onTap: () {
     Navigator.push(
       context,
@@ -229,15 +230,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const Divider(height: 1, indent: 50),
                   _buildProfileOption(
                     icon: Icons.payment,
-                    title: 'Payment Methods',
+                    title: 'payment_method'.tr(),
                     onTap: () {},
                   ),
                   const Divider(height: 1, indent: 50),
-                  _buildProfileOption(
-                    icon: Icons.settings_outlined,
-                    title: 'Settings',
-                    onTap: () {},
-                  ),
+               _buildProfileOption(
+  icon: Icons.language,
+  title: 'language'.tr(),
+  onTap: () {
+    _showLanguageSheet(context);
+  },
+),
                 ],
               ),
             ),
@@ -251,8 +254,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               child: ListTile(
                 leading: const Icon(Icons.logout, color: Colors.red),
-                title: const Text(
-                  'Log Out',
+                title: Text(
+                  'log_out'.tr(),
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: Colors.red,
@@ -296,4 +299,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
       onTap: onTap,
     );
   }
+}
+
+// This function shows a bottom sheet for language selection.
+void _showLanguageSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (context) {
+      return SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.language),
+              title: Text('english'.tr()),
+              onTap: () async {
+                await context.setLocale(const Locale('en'));
+                if (context.mounted) Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.language),
+              title: Text('arabic'.tr()),
+              onTap: () async {
+                await context.setLocale(const Locale('ar'));
+                if (context.mounted) Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }

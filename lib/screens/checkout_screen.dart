@@ -1,15 +1,16 @@
-import 'package:easyair_app/screens/booking_confirmation_screen.dart';
-import 'package:easyair_app/widgets/credit_filter.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easyair_app/models/flight_model.dart';
+import 'package:easyair_app/services/booking_service.dart';
 import 'package:easyair_app/widgets/order_summary_card.dart';
 import 'package:easyair_app/widgets/credit_card_widget.dart';
 import 'package:easyair_app/widgets/fawry_payment_widget.dart';
-import 'package:flutter/services.dart';
-import 'package:easyair_app/services/booking_service.dart';
-import 'package:easyair_app/models/flight_model.dart';
+import 'package:easyair_app/screens/booking_confirmation_screen.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  final FlightModel flight; // 👈 الرحلة الحقيقية
+  final FlightModel flight;
   final int passengerCount;
   final String selectedClass;
   final double totalPrice;
@@ -32,6 +33,7 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   int selectedPaymentMethod = 0; // 0 = Card, 1 = Fawry
+  bool isProcessing = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final cardNumberController = TextEditingController();
@@ -69,7 +71,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. كارت ملخص الطلب النضيف
+            // 1. كارت ملخص الطلب
             OrderSummaryCard(
               fromCode: widget.flight.fromCode,
               toCode: widget.flight.toCode,
@@ -108,9 +110,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         color: Colors.white,
         child: SafeArea(
           child: ElevatedButton(
-            onPressed: () {
-              _processPayment(); // 👈 تأكد إن الدالة بتتنادى هنا بين الأقواس
-            },
+            onPressed: isProcessing ? null : _processPayment,
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFFFFB73F),
               minimumSize: const Size.fromHeight(50),
@@ -119,7 +119,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ),
             ),
             child: Text(
-              'Pay \$${widget.totalPrice.toStringAsFixed(0)}',
+              isProcessing
+                  ? 'Processing...'
+                  : 'Pay \$${widget.totalPrice.toStringAsFixed(0)}',
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -132,7 +134,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  // ودجت صغيرة لتبويب الاختيار
   Widget _buildTab(int index, String label, IconData icon) {
     final isSelected = selectedPaymentMethod == index;
     return GestureDetector(
@@ -169,7 +170,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  // فورم الدفع بالفيزا
   Widget _buildCardForm() {
     return Form(
       key: _formKey,
@@ -185,13 +185,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             controller: cardNumberController,
             keyboardType: TextInputType.number,
             inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly, // أرقام بس
-              LengthLimitingTextInputFormatter(16), // أقصى حد 16 رقم
-              CardNumberFormatter(), // رص كل 4 أرقام بمسافة
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(16),
+              CardNumberFormatter(),
             ],
             onChanged: (_) => setState(() {}),
-
-            // 👇 2. التفتيش: بيشيل المسافات ويتأكد إنهم 16 رقم بالضبط!
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter card number';
@@ -232,7 +230,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 child: TextFormField(
                   controller: expiryController,
                   keyboardType: TextInputType.number,
-                  maxLength: 5, // 4 أرقام + السلاش /
+                  maxLength: 5,
                   validator: (v) {
                     if (v == null || v.length < 5 || !v.contains('/')) {
                       return 'MM/YY';
@@ -273,51 +271,105 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  // 🚀 تنفيذ الدفع والانتقال المباشر للتذاكر
   Future<void> _processPayment() async {
-    // 1. التفتيش على المدخلات
+    if (isProcessing) return;
+
     if (selectedPaymentMethod == 0 && !_formKey.currentState!.validate()) {
       return;
     }
     if (selectedPaymentMethod == 1 && fawryPhoneController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter your Fawry phone number!'),
+        SnackBar(
+          content: Text('fawry_payment'.tr()),
           backgroundColor: Colors.red,
         ),
       );
       return;
     }
 
-    // 2. 🪄 سحر الـ Clean Code: سطر واحد بس بيعمل ويحفظ الحجز جوه الـ Service!
-    final booking = await BookingService.instance.createAndSaveBooking(
-      flight: widget.flight,
-      passengerCount: widget.passengerCount,
-      selectedClass: widget.selectedClass,
-      totalPrice: widget.totalPrice,
-      selectedSeats: widget.selectedSeats,
-      passengerNames: widget.passengerNames,
-      paymentMethod: selectedPaymentMethod == 0 ? 'Card' : 'Fawry',
-    );
+    setState(() => isProcessing = true);
+    try {
+      final booking = await BookingService.instance.createAndSaveBooking(
+        flight: widget.flight,
+        passengerCount: widget.passengerCount,
+        selectedClass: widget.selectedClass,
+        totalPrice: widget.totalPrice,
+        selectedSeats: widget.selectedSeats,
+        passengerNames: widget.passengerNames,
+        paymentMethod: selectedPaymentMethod == 0 ? 'Card' : 'Fawry',
+      );
 
-    if (!mounted) return;
+      if (!mounted) return;
 
-    // 3. الانتقال المباشر لشاشة التأكيد
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => BookingConfirmationScreen(
-          flightNumber: booking.flightNumber,
-          fromCode: booking.fromCode,
-          toCode: booking.toCode,
-          departTime: booking.departTime,
-          arriveTime: booking.arriveTime,
-          date: booking.date,
-          selectedClass: booking.selectedClass,
-          selectedSeats: booking.seats,
-          passengerNames: booking.passengerNames,
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BookingConfirmationScreen(
+            flightNumber: booking.flightNumber,
+            fromCode: booking.fromCode,
+            toCode: booking.toCode,
+            departTime: booking.departTime,
+            arriveTime: booking.arriveTime,
+            date: booking.date,
+            selectedClass: booking.selectedClass,
+            selectedSeats: booking.seats,
+            passengerNames: booking.passengerNames,
+          ),
         ),
-      ),
+      );
+    } catch (error) {
+      if (!mounted) return;
+
+      final String message;
+      if (error is StateError) {
+        message = error.message.toString();
+      } else if (error is FirebaseException) {
+        debugPrint('Booking failed (${error.code}): ${error.message}');
+        message = switch (error.code) {
+          'permission-denied' =>
+            'Firestore denied saving this booking. Check Security Rules.',
+          'unavailable' =>
+            'Firebase is unavailable. Check your internet connection.',
+          _ => 'Booking failed: ${error.message ?? 'Please try again.'}',
+        };
+      } else {
+        debugPrint('Booking failed: $error');
+        message = 'Could not complete your booking: $error';
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message), backgroundColor: Colors.red),
+      );
+    } finally {
+      if (mounted) setState(() => isProcessing = false);
+    }
+  }
+}
+
+// 💳 تنسيق أرقام الفيزا مسافة كل 4 أرقام
+class CardNumberFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    var text = newValue.text;
+    if (newValue.selection.baseOffset == 0) return newValue;
+
+    var buffer = StringBuffer();
+    String cleanText = text.replaceAll(' ', '');
+
+    for (int i = 0; i < cleanText.length; i++) {
+      buffer.write(cleanText[i]);
+      var nonZeroIndex = i + 1;
+      if (nonZeroIndex % 4 == 0 && nonZeroIndex != cleanText.length) {
+        buffer.write(' ');
+      }
+    }
+
+    var string = buffer.toString();
+    return newValue.copyWith(
+      text: string,
+      selection: TextSelection.collapsed(offset: string.length),
     );
   }
 }

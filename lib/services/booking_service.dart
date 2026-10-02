@@ -10,7 +10,31 @@ class BookingService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // 🎯 1. إنشاء وحفظ الحجز أونلاين في Cloud Firestore
+  // 💺 1. جلب الكراسي المحجوزة أونلاين بدقة وبدون أي Indexes!
+  Future<List<String>> getBookedSeatsForFlight({
+    required String flightNumber,
+    required String date,
+  }) async {
+    try {
+      // معرف المستند الخاص بالرحلة في اليوم ده (مثل: FL-101_15/8/2025)
+      final docId = '${flightNumber}_${date.replaceAll('/', '-')}';
+
+      final doc = await _db.collection('flight_seats').doc(docId).get();
+
+      if (doc.exists && doc.data() != null) {
+        final List<dynamic> seats = doc.data()!['seats'] ?? [];
+        print('✅ Booked seats loaded: $seats');
+        return seats.map((e) => e.toString()).toList();
+      }
+
+      return [];
+    } catch (e) {
+      print('❌ Error fetching seats: $e');
+      return [];
+    }
+  }
+
+  // 🎯 2. حفظ الحجز + تحديث خريطة كراسي الطيارة في نفس الوقت!
   Future<BookingModel> createAndSaveBooking({
     required FlightModel flight,
     required int passengerCount,
@@ -20,14 +44,12 @@ class BookingService {
     required List<String> passengerNames,
     required String paymentMethod,
   }) async {
-    // جلب الـ UID بتاع المستخدم اللي عامل لوجين حالياً
     final userId = _auth.currentUser?.uid;
     if (userId == null) throw 'User must be logged in to book';
 
-    // توليد رقم حجز فريد
-    final bookingId = 'EA${DateTime.now().millisecondsSinceEpoch.toString().substring(8)}';
+    final bookingId =
+        'EA${DateTime.now().millisecondsSinceEpoch.toString().substring(8)}';
 
-    // بناء كائن الحجز
     final booking = BookingModel(
       id: bookingId,
       flightNumber: flight.id,
@@ -47,7 +69,7 @@ class BookingService {
       status: 'upcoming',
     );
 
-    // ☁️ السحر هنا: رفع الحجز للفايربيز أونلاين تحت حساب المستخدم بالضبط!
+    // أ. حفظ التذكرة جوه حساب المستخدم
     await _db
         .collection('users')
         .doc(userId)
@@ -55,10 +77,16 @@ class BookingService {
         .doc(bookingId)
         .set(booking.toJson());
 
+    // ب. 🎯 تسجيل الكراسي جوه خريطة الطيارة (لتثبيتها كـ Taken للمسافرين التانيين)
+    final docId = '${flight.id}_${flight.date.replaceAll('/', '-')}';
+    await _db.collection('flight_seats').doc(docId).set({
+      'seats': FieldValue.arrayUnion(selectedSeats), // بيزود الكراسي بدون تكرار
+    }, SetOptions(merge: true));
+
     return booking;
   }
 
-  // ☁️ 2. جلب كل الحجوزات أونلاين من الفايربيز
+  // 3. جلب كل الحجوزات للمستخدم
   Future<List<BookingModel>> getAllBookings() async {
     final userId = _auth.currentUser?.uid;
     if (userId == null) return [];
@@ -75,15 +103,44 @@ class BookingService {
         .toList();
   }
 
-  // 3. جلب الرحلات القادمة
   Future<List<BookingModel>> getUpcomingBookings() async {
     final all = await getAllBookings();
-    return all.where((b) => b.status == 'upcoming').toList();
+    final now = DateTime.now();
+    // النهاردة بدون الساعات عشان نقارن الأيام بالضبط
+    final today = DateTime(now.year, now.month, now.day);
+
+    return all.where((b) {
+      final flightDate = _parseDate(b.date);
+      // لو تاريخ الرحلة يساوي النهاردة أو بعد النهاردة -> Upcoming
+      return flightDate.isAfter(today) || flightDate.isAtSameMomentAs(today);
+    }).toList();
   }
 
-  // 4. جلب الرحلات السابقة
   Future<List<BookingModel>> getPastBookings() async {
     final all = await getAllBookings();
-    return all.where((b) => b.status == 'completed' || b.status == 'cancelled').toList();
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    return all.where((b) {
+      final flightDate = _parseDate(b.date);
+      // لو تاريخ الرحلة قبل النهاردة -> Past
+      return flightDate.isBefore(today);
+    }).toList();
+  }
+
+  // 🛠️ دالة مساعدة بتحول نص التاريخ (مثل "15/8/2025") لكائن DateTime يقدر دارت يقارنه
+  DateTime _parseDate(String dateStr) {
+    try {
+      final parts = dateStr.split('/');
+      if (parts.length == 3) {
+        final day = int.parse(parts[0]);
+        final month = int.parse(parts[1]);
+        final year = int.parse(parts[2]);
+        return DateTime(year, month, day);
+      }
+    } catch (e) {
+      print('Error parsing date: $e');
+    }
+    return DateTime.now(); // افتراضي
   }
 }

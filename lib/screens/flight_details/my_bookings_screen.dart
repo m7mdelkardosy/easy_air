@@ -111,6 +111,16 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
 
   // كارت الرحلة المحجوزة
   Widget _buildBookingCard(BookingModel booking) {
+      final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final flightDate = _parseDate(booking.date);
+
+  // لو تاريخ الرحلة قبل النهاردة ➔ تبقى انتهت (COMPLETED)
+  final bool isPast = flightDate.isBefore(today);
+  final String statusText = isPast ? 'COMPLETED' : 'UPCOMING';
+  final Color statusColor = isPast ? Colors.blue : Colors.green;
+  final Color statusBgColor = isPast ? const Color(0xFFE3F2FD) : const Color(0xFFE8F5E9);
+
     return GestureDetector(
       onTap: () {
         // لما يضغط على الرحلة المحجوزة بتفتح التذكرة والـ QR كود تاني!
@@ -158,20 +168,20 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFE8F5E9),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    booking.status.toUpperCase(),
-                    style: const TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
-                  ),
-                ),
+  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+  decoration: BoxDecoration(
+    color: statusBgColor, // 👈 بقى متغير (أزرق للقديمة - أخضر للقادمة)
+    borderRadius: BorderRadius.circular(8),
+  ),
+  child: Text(
+    statusText, // 👈 بقى يكتب COMPLETED للرحلات القديمة أوتوماتيك!
+    style: TextStyle(
+      fontSize: 10,
+      fontWeight: FontWeight.bold,
+      color: statusColor,
+    ),
+  ),
+)
               ],
             ),
             const Divider(height: 24),
@@ -232,4 +242,20 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
       ),
     );
   }
+}
+ // دالة مساعدة لتحويل تاريخ الرحلة من String لـ DateTime
+
+DateTime _parseDate(String dateStr) {
+  try {
+    final parts = dateStr.split('/');
+    if (parts.length == 3) {
+      final day = int.parse(parts[0]);
+      final month = int.parse(parts[1]);
+      final year = int.parse(parts[2]);
+      return DateTime(year, month, day);
+    }
+  } catch (e) {
+    print('Error parsing date: $e');
+  }
+  return DateTime.now();
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:easyair_app/models/airports.dart';
 import 'package:easyair_app/screens/search_screen.dart';
 import 'package:flutter/material.dart';
@@ -113,7 +114,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Good Morning,\n$userName!',
+                                    'good_morning_user'.tr(
+                                      namedArgs: {'name': userName},
+                                    ),
                                     style: const TextStyle(
                                       fontSize: 24,
                                       color: Colors.white,
@@ -121,8 +124,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                   const SizedBox(height: 8),
-                                  const Text(
-                                    'Where are we flying today?',
+                                  Text(
+                                    'where_flying'.tr(),
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: Color(0xFFBBC7DF),
@@ -153,10 +156,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Padding(
+                                  Padding(
                                     padding: EdgeInsets.all(16),
                                     child: Text(
-                                      'Flights',
+                                      'flights'.tr(),
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -222,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               controller: controller,
                                               focusNode: focusNode,
                                               decoration: InputDecoration(
-                                                hintText: 'From (City or Code)',
+                                                hintText: 'from'.tr(),
                                                 prefixIcon: const Icon(
                                                   Icons.flight_takeoff,
                                                   color: Color.fromARGB(
@@ -300,8 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               controller: controller,
                                               focusNode: focusNode,
                                               decoration: InputDecoration(
-                                                hintText:
-                                                    'To (City, Airport, or Code)',
+                                                hintText: 'to'.tr(),
                                                 prefixIcon: const Icon(
                                                   Icons.flight_land,
                                                   color: Color.fromARGB(
@@ -331,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       onTap: () =>
                                           _selectDepartureDate(context),
                                       decoration: InputDecoration(
-                                        hintText: 'Departure Date',
+                                        hintText: 'departure_date'.tr(),
                                         prefixIcon: const Icon(
                                           Icons.calendar_month,
                                           color: Colors.blueAccent,
@@ -399,8 +401,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                         ),
-                                        child: const Text(
-                                          'Search Flights',
+                                        child: Text(
+                                          'search_flights'.tr(),
                                           style: TextStyle(
                                             fontSize: 15,
                                             color: Color(0xFF0A1628),

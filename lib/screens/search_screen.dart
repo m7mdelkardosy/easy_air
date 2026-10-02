@@ -128,11 +128,25 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
                 return FlightCard(
                   flight: flight,
                   onTap: () {
+                       final String formattedUserDate = 
+          "${widget.selectedDate.day}/${widget.selectedDate.month}/${widget.selectedDate.year}";
+             final updatedFlight = FlightModel(
+        id: flight.id,
+        airline: flight.airline,
+      
+        fromCode: flight.fromCode,
+        toCode: flight.toCode,
+        departureTime: flight.departureTime,
+        arrivalTime: flight.arrivalTime,
+        duration: flight.duration,
+        isDirect: flight.isDirect,
+        price: flight.price,
+        date: formattedUserDate,   );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            FlightDetailsScreen(flight: flight),
+                            FlightDetailsScreen(flight: updatedFlight),
                       ),
                     );
                   },
