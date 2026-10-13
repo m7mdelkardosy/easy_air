@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class PassengerCounter extends StatelessWidget {
@@ -26,12 +27,12 @@ class PassengerCounter extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Row(
+          Row(
             children: [
               Icon(Icons.person_outline, color: Color(0xFF101C2E)),
               SizedBox(width: 8),
               Text(
-                'Passengers',
+                'passengers'.tr(),
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -43,9 +44,7 @@ class PassengerCounter extends StatelessWidget {
           Row(
             children: [
               IconButton(
-                onPressed: count > min
-                    ? () => onChanged(count - 1)
-                    : null,
+                onPressed: count > min ? () => onChanged(count - 1) : null,
                 icon: const Icon(Icons.remove_circle_outline),
                 color: count > min ? const Color(0xFF101C2E) : Colors.grey,
               ),
@@ -58,9 +57,7 @@ class PassengerCounter extends StatelessWidget {
                 ),
               ),
               IconButton(
-                onPressed: count < max
-                    ? () => onChanged(count + 1)
-                    : null,
+                onPressed: count < max ? () => onChanged(count + 1) : null,
                 icon: const Icon(Icons.add_circle_outline),
                 color: count < max ? const Color(0xFFFFB73F) : Colors.grey,
               ),

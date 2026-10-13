@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:easyair_app/models/flight_model.dart';
 import 'package:easyair_app/widgets/passenger_form_card.dart';
@@ -85,8 +86,8 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FB),
       appBar: AppBar(
-        title: const Text(
-          'Passenger Details',
+        title: Text(
+          'passenger_details'.tr(),
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.white,
@@ -112,7 +113,9 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Please enter details for ${widget.passengerCount} passenger${widget.passengerCount > 1 ? 's' : ''}.',
+                      'passenger_details_desc'.tr(
+                        namedArgs: {'count': widget.passengerCount.toString()},
+                      ),
                       style: const TextStyle(
                         fontSize: 13,
                         color: Color(0xFF0066CC),
@@ -153,8 +156,8 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: const Text(
-              'Continue to Payment',
+            child: Text(
+              'Continue_to_payment'.tr(),
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

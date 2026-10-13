@@ -10,11 +10,9 @@ class AuthGate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
-      // 📡 الشفرة السحرية: بتتسمع للتغيير في حالة تسجيل الدخول مباشر من الفايربيز
       stream: AuthService.instance.authStateChanges,
       builder: (context, snapshot) {
         
-        // 1. أجزاء من الثانية أثناء ما الفايربيز بيفحص الـ Cache والسيشن
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
             backgroundColor: Color(0xFFF5F7FB),
@@ -24,12 +22,10 @@ class AuthGate extends StatelessWidget {
           );
         }
 
-        // 2. لو المستخدم مسجل دخول حالياً (في بيانات User) ➔ افتح الصفحة الرئيسية
         if (snapshot.hasData && snapshot.data != null) {
           return const MainLayout();
         }
 
-        // 3. لو مش مسجل دخول ➔ افتح صفحة تسجيل الدخول
         return const LoginScreen();
       },
     );

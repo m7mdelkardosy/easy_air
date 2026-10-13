@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:easyair_app/services/auth_service.dart';
 
@@ -66,8 +67,8 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Profile updated successfully 🎉'),
+         SnackBar(
+          content: Text('profile_updated'.tr()),
           backgroundColor: Colors.green,
         ),
       );
@@ -100,8 +101,8 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FB),
       appBar: AppBar(
-        title: const Text(
-          'Personal Details',
+        title: Text(
+          'personal_details'.tr(),
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.white,
@@ -141,12 +142,12 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
                             textCapitalization: TextCapitalization.words,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'Please enter your name';
+                                return 'enter_name'.tr();
                               }
                               return null;
                             },
                             decoration: InputDecoration(
-                              labelText: 'Full Name',
+                              labelText: 'full_name'.tr(),
                               prefixIcon: const Icon(Icons.person_outline),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -179,12 +180,12 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
                             keyboardType: TextInputType.phone,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'Please enter your phone number';
+                                return 'enter_phone'.tr();
                               }
                               return null;
                             },
                             decoration: InputDecoration(
-                              labelText: 'Phone Number',
+                              labelText: 'phone_number'.tr(),
                               prefixIcon: const Icon(Icons.phone_outlined),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -197,8 +198,8 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
 
                     const SizedBox(height: 12),
 
-                    const Text(
-                      'Phone , Email cannot be changed for security reasons.',
+                     Text(
+                      'phone_email'.tr(),
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ],
@@ -228,8 +229,8 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
                       color: Color(0xFF0A1628),
                     ),
                   )
-                : const Text(
-                    'Save Changes',
+                :  Text(
+                    'save_changes'.tr(),
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -242,3 +243,4 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
     );
   }
 }
+

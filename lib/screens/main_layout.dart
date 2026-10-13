@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:easyair_app/screens/login/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:easyair_app/screens/home_screen.dart';
@@ -37,13 +38,13 @@ class _MainLayoutState extends State<MainLayout> {
         unselectedItemColor: Colors.grey, // رمادي للي مش مختار
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed, // عشان الأيقونات تفضل ثابتة
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'search'.tr()),
           BottomNavigationBarItem(
             icon: Icon(Icons.airplane_ticket),
-            label: 'Bookings',
+            label: 'my_bookingss'.tr(),
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'profile'.tr()),
         ],
       ),
     );

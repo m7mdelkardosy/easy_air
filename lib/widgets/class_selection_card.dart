@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ClassSelectionCard extends StatelessWidget {
@@ -67,7 +68,9 @@ class ClassSelectionCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: isSelected ? const Color(0xFF101C2E) : Colors.grey,
+                          color: isSelected
+                              ? const Color(0xFF101C2E)
+                              : Colors.grey,
                         ),
                       ),
                     ],
@@ -75,7 +78,7 @@ class ClassSelectionCard extends StatelessWidget {
                   const SizedBox(height: 12),
                   // المميزات
                   ...features.map(
-                    (feature) => Padding(
+                    (featureKey) => Padding(
                       padding: const EdgeInsets.only(bottom: 4),
                       child: Row(
                         children: [
@@ -85,7 +88,11 @@ class ClassSelectionCard extends StatelessWidget {
                             color: isSelected ? Colors.blue : Colors.grey,
                           ),
                           const SizedBox(width: 8),
-                          Text(feature, style: const TextStyle(fontSize: 13)),
+                          // 🎯 الترجمة بتتم هنا بنظافة وقت الرسم:
+                          Text(
+                            featureKey.tr(), // 👈 السحر هنا!
+                            style: const TextStyle(fontSize: 13),
+                          ),
                         ],
                       ),
                     ),
@@ -99,7 +106,10 @@ class ClassSelectionCard extends StatelessWidget {
                 top: 0,
                 right: 0,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: const BoxDecoration(
                     color: Color(0xFFFFB73F),
                     borderRadius: BorderRadius.only(
@@ -107,8 +117,8 @@ class ClassSelectionCard extends StatelessWidget {
                       bottomLeft: Radius.circular(10),
                     ),
                   ),
-                  child: const Text(
-                    'SELECTED',
+                  child: Text(
+                    'selected'.tr(),
                     style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                   ),
                 ),

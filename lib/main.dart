@@ -1,3 +1,4 @@
+import 'package:easyair_app/screens/splash_screen.dart';
 import 'package:easyair_app/services/auth_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFF5F7FB)),
-      home: const AuthGate(),
+      home: const SplashScreen(),
     );
   }
 }

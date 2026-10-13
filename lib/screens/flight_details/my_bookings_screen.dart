@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:easyair_app/models/booking_model.dart';
 import 'package:easyair_app/services/booking_service.dart';
@@ -11,6 +12,20 @@ class MyBookingsScreen extends StatefulWidget {
 }
 
 class _MyBookingsScreenState extends State<MyBookingsScreen> {
+  String _getTranslatedClass(String className) {
+    switch (className.toLowerCase()) {
+      case 'economy':
+        return 'economy'.tr();
+      case 'business':
+        return 'business'.tr();
+      case 'first class':
+      case 'firstclass':
+        return 'first_class'.tr();
+      default:
+        return className;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -21,21 +36,21 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
           backgroundColor: Colors.white,
           elevation: 0,
           centerTitle: true,
-          title: const Text(
-            'My Bookings',
+          title: Text(
+            'my_bookings'.tr(),
             style: TextStyle(
               color: Color(0xFF101C2E),
               fontWeight: FontWeight.bold,
             ),
           ),
-          bottom: const TabBar(
+          bottom: TabBar(
             labelColor: Color(0xFFFFB73F), // أصفر برتقالي للتاب النشط
             unselectedLabelColor: Colors.grey,
             indicatorColor: Color(0xFFFFB73F),
             indicatorWeight: 3,
             tabs: [
-              Tab(text: 'Upcoming'),
-              Tab(text: 'Past Flights'),
+              Tab(text: 'upcoming'.tr()),
+              Tab(text: 'past_flights'.tr()),
             ],
           ),
         ),
@@ -79,7 +94,9 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  isUpcoming ? 'No upcoming flights' : 'No past flights',
+                  isUpcoming
+                      ? 'no_upcoming_flights'.tr()
+                      : 'no_past_flights'.tr(),
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -87,8 +104,8 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                   ),
                 ),
                 const SizedBox(height: 6),
-                const Text(
-                  'When you book a flight, it will appear here.',
+                Text(
+                  'when_you_book_flight'.tr(),
                   style: TextStyle(color: Colors.grey),
                 ),
               ],
@@ -111,15 +128,17 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
 
   // كارت الرحلة المحجوزة
   Widget _buildBookingCard(BookingModel booking) {
-      final now = DateTime.now();
-  final today = DateTime(now.year, now.month, now.day);
-  final flightDate = _parseDate(booking.date);
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final flightDate = _parseDate(booking.date);
 
-  // لو تاريخ الرحلة قبل النهاردة ➔ تبقى انتهت (COMPLETED)
-  final bool isPast = flightDate.isBefore(today);
-  final String statusText = isPast ? 'COMPLETED' : 'UPCOMING';
-  final Color statusColor = isPast ? Colors.blue : Colors.green;
-  final Color statusBgColor = isPast ? const Color(0xFFE3F2FD) : const Color(0xFFE8F5E9);
+    // لو تاريخ الرحلة قبل النهاردة ➔ تبقى انتهت (COMPLETED)
+    final bool isPast = flightDate.isBefore(today);
+    final String statusText = isPast ? 'completed'.tr() : 'upcoming'.tr();
+    final Color statusColor = isPast ? Colors.blue : Colors.green;
+    final Color statusBgColor = isPast
+        ? const Color(0xFFE3F2FD)
+        : const Color(0xFFE8F5E9);
 
     return GestureDetector(
       onTap: () {
@@ -168,20 +187,24 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                   ),
                 ),
                 Container(
-  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-  decoration: BoxDecoration(
-    color: statusBgColor, // 👈 بقى متغير (أزرق للقديمة - أخضر للقادمة)
-    borderRadius: BorderRadius.circular(8),
-  ),
-  child: Text(
-    statusText, // 👈 بقى يكتب COMPLETED للرحلات القديمة أوتوماتيك!
-    style: TextStyle(
-      fontSize: 10,
-      fontWeight: FontWeight.bold,
-      color: statusColor,
-    ),
-  ),
-)
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color:
+                        statusBgColor, // 👈 بقى متغير (أزرق للقديمة - أخضر للقادمة)
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    statusText, // 👈 بقى يكتب COMPLETED للرحلات القديمة أوتوماتيك!
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: statusColor,
+                    ),
+                  ),
+                ),
               ],
             ),
             const Divider(height: 24),
@@ -199,7 +222,10 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                         color: Color(0xFF101C2E),
                       ),
                     ),
-                    Text(booking.departTime, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                    Text(
+                      booking.departTime,
+                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                    ),
                   ],
                 ),
                 const Icon(Icons.flight_takeoff, color: Color(0xFFFFB73F)),
@@ -214,7 +240,10 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
                         color: Color(0xFF101C2E),
                       ),
                     ),
-                    Text(booking.arriveTime, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                    Text(
+                      booking.arriveTime,
+                      style: const TextStyle(color: Colors.grey, fontSize: 12),
+                    ),
                   ],
                 ),
               ],
@@ -224,11 +253,20 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '${booking.date} • ${booking.selectedClass}',
+                  'date_class_format'.tr(
+                    namedArgs: {
+                      'date': booking.date,
+                      'class': _getTranslatedClass(
+                        booking.selectedClass,
+                      ), // 👈 ترجمة كلمة الدرجة!
+                    },
+                  ),
                   style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
                 Text(
-                  'Seats: ${booking.seats.join(', ')}',
+                  'seats_label'.tr(
+                    namedArgs: {'seats': booking.seats.join(', ')},
+                  ),
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -243,7 +281,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
     );
   }
 }
- // دالة مساعدة لتحويل تاريخ الرحلة من String لـ DateTime
+// دالة مساعدة لتحويل تاريخ الرحلة من String لـ DateTime
 
 DateTime _parseDate(String dateStr) {
   try {

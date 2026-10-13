@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:easyair_app/screens/flight_details/seat_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:easyair_app/models/flight_model.dart';
@@ -20,22 +21,22 @@ class _FlightDetailsScreenState extends State<FlightDetailsScreen> {
 
   late final List<Map<String, dynamic>> classes = [
     {
-      'name': 'Economy',
-      'subtitle': 'Standard Legroom',
+      'name': 'economy'.tr(),
+      'subtitle': 'standard_legroom'.tr(),
       'price': widget.flight.price,
-      'features': ['1 Cabin Bag', 'No checked bag'],
+      'features': ['cabin_bag_1', 'no_checked_bag'],
     },
     {
-      'name': 'Business',
-      'subtitle': 'Lounge Access',
+      'name': 'business'.tr(),
+      'subtitle': 'lounge_access'.tr(),
       'price': widget.flight.price * 2.5,
-      'features': ['2 Cabin Bags', '2 Checked Bags (32kg)'],
+      'features': ['cabin_bag_2', 'checked_bag_2'],
     },
     {
-      'name': 'First Class',
-      'subtitle': 'Private Suite',
+      'name': 'first_class'.tr(),
+      'subtitle': 'private_suite'.tr(),
       'price': widget.flight.price * 7,
-      'features': ['2 Cabin Bags', '3 Checked Bags (32kg)'],
+      'features': ['cabin_bag_2', 'checked_bag_3'],
     },
   ];
 
@@ -78,8 +79,8 @@ class _FlightDetailsScreenState extends State<FlightDetailsScreen> {
           const SizedBox(height: 20),
 
           // 2. عنوان الدرجات
-          const Text(
-            'Select Your Class',
+          Text(
+            'select_your_class'.tr(),
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
@@ -114,12 +115,14 @@ class _FlightDetailsScreenState extends State<FlightDetailsScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Total Price',
+                Text(
+                  'total_price'.tr(),
                   style: TextStyle(color: Colors.grey, fontSize: 12),
                 ),
                 Text(
-                  'Total for $passengerCount Passenger${passengerCount > 1 ? 's' : ''}',
+                  'total_for_passengers'.tr(
+                    namedArgs: {'count': passengerCount.toString()},
+                  ),
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -139,24 +142,25 @@ class _FlightDetailsScreenState extends State<FlightDetailsScreen> {
               ],
             ),
             ElevatedButton(
-            onPressed: () {
-    // 1. حساب السعر الأساسي (سعر الكلاس × عدد المسافرين)
-    final double calculatedBasePrice = 
-        (classes[selectedClassIndex]['price'] as double) * passengerCount;
+              onPressed: () {
+                // 1. حساب السعر الأساسي (سعر الكلاس × عدد المسافرين)
+                final double calculatedBasePrice =
+                    (classes[selectedClassIndex]['price'] as double) *
+                    passengerCount;
 
-    // 2. الانتقال لشاشة الكراسي وتمرير البيانات
-    Navigator.push(
-      context,
-        MaterialPageRoute(
-        builder: (context) => SeatSelectionScreen(
-          flight: widget.flight, // 👈 بنبعت الرحلة الحقيقية كاملة!
-          passengerCount: passengerCount,
-          selectedClass: classes[selectedClassIndex]['name'],
-          basePrice: calculatedBasePrice,
-        ),
-      ),
-    );
-  },
+                // 2. الانتقال لشاشة الكراسي وتمرير البيانات
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SeatSelectionScreen(
+                      flight: widget.flight, // 👈 بنبعت الرحلة الحقيقية كاملة!
+                      passengerCount: passengerCount,
+                      selectedClass: classes[selectedClassIndex]['name'],
+                      basePrice: calculatedBasePrice,
+                    ),
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFFFB73F),
                 padding: const EdgeInsets.symmetric(
@@ -167,8 +171,8 @@ class _FlightDetailsScreenState extends State<FlightDetailsScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Text(
-                'Continue',
+              child: Text(
+                'continue'.tr(),
                 style: TextStyle(
                   color: Color(0xFF0A1628),
                   fontWeight: FontWeight.bold,
